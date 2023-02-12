@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Fetch API</title>
+  </head>
+  <body>
+    <h1>Welcome to Movie Database App!</h1>
+    <h2>Search for any movie</h2>
+    <input id="movie" placeholder="enter movie" />
+    <button id="getMovie">Get Movie</button>
+
+    <div>
+      <span id="movieTitle"></span><br />
+      <span id="movieYear"></span><br />
+      <span id="movieActors"></span>
+    </div>
+
+    <div class="boxes" id="box-1">
+      <div class="boxes" id="box-1-child"></div>
+      <div class="boxes" id="box-2-child"></div>
+    </div>
+
+    <div class="boxes" id="box-2">
+      <div class="boxes" id="box-2-child"></div>
+    </div>
+
+    <script>
+      document.getElementById('getMovie').addEventListener('click', getMovie);
+      const userInput = document.getElementById('movie');
+      const title = document.getElementById('movieTitle');
+      const year = document.getElementById('movieYear');
+      const actors = document.getElementById('movieActors');
+
+      async function getMovie() {
+        movieTitle = userInput.value;
+        let result = await fetch(
+          'http://www.omdbapi.com/?t=' + movieTitle + '&apikey=65c48547'
+        );
+        console.log(result);
+        let result_in_obj_form = await result.json();
+        console.log('the data I got back from API was', result_in_obj_form);
+        title.innerHTML = 'Title:' + result_in_obj_form.Title;
+        year.innerHTML = 'Release Year:' + result_in_obj_form.Year;
+        actors.innerHTML = 'Cast:' + result_in_obj_form.Actors;
+      }
+
+      //  title, release year, and main actors.
+    </script>
+  </body>
+</html>
